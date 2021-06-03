@@ -1,25 +1,26 @@
-import React from 'react';
 import {
+  fireEvent,
   render,
   screen,
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
+import React from 'react';
 
 import FirebaseStub, { DatabaseConstants } from 'gatsby-plugin-firebase';
 
-import { dataTestId as loadingScreenTestId } from '../../../../components/router/LoadingScreen';
-import { SettingsProvider } from '../../../../contexts/SettingsContext';
-import { ModalProvider } from '../../../../contexts/ModalContext';
-import { UserProvider } from '../../../../contexts/UserContext';
 import {
   DatabaseProvider,
   DebounceWaitTime,
 } from '../../../../contexts/DatabaseContext';
+import { ModalProvider } from '../../../../contexts/ModalContext';
 import { ResumeProvider } from '../../../../contexts/ResumeContext';
+import { SettingsProvider } from '../../../../contexts/SettingsContext';
 import { StorageProvider } from '../../../../contexts/StorageContext';
-import Wrapper from '../../../../components/shared/Wrapper';
+import { UserProvider } from '../../../../contexts/UserContext';
+import { dataTestId as loadingScreenTestId } from '../../../../components/router/LoadingScreen';
 import Builder from '../../builder';
+import Wrapper from '../../../../components/shared/Wrapper';
 
 const waitForDatabaseUpdateToHaveCompletedFn = async (
   mockDatabaseUpdateFunction,
@@ -46,9 +47,40 @@ const expectDatabaseUpdateToHaveCompleted = async (
   );
 };
 
+const dragAndDropDirectionUp = 'DND_DIRECTION_UP';
+const dragAndDropDirectionDown = 'DND_DIRECTION_DOWN';
+
+const dragAndDropListItem = (listItemElement, direction) => {
+  const spaceKey = { keyCode: 32 };
+  const arrowUpKey = { keyCode: 38 };
+  const arrowDownKey = { keyCode: 40 };
+  const getKeyForDirection = () => {
+    switch (direction) {
+      case dragAndDropDirectionUp:
+        return arrowUpKey;
+      case dragAndDropDirectionDown:
+        return arrowDownKey;
+      default:
+        throw new Error('Unhandled `direction`!');
+    }
+  };
+
+  listItemElement.focus();
+
+  // start the drag
+  fireEvent.keyDown(listItemElement, spaceKey);
+
+  // move element based on direction
+  fireEvent.keyDown(listItemElement, getKeyForDirection());
+
+  // drop
+  fireEvent.keyDown(listItemElement, spaceKey);
+};
+
 // eslint-disable-next-line no-underscore-dangle
 async function _setup(
   resumeId,
+  signInWithGoogle,
   waitForLoadingScreenToDisappear,
   waitForDatabaseUpdateToHaveCompleted,
 ) {
@@ -65,7 +97,12 @@ async function _setup(
     'update',
   );
 
-  FirebaseStub.auth().signInAnonymously();
+  if (signInWithGoogle) {
+    const provider = new FirebaseStub.auth.GoogleAuthProvider();
+    FirebaseStub.auth().signInWithPopup(provider);
+  } else {
+    FirebaseStub.auth().signInAnonymously();
+  }
 
   render(
     <SettingsProvider>
@@ -101,17 +138,19 @@ async function _setup(
 }
 
 async function setup(resumeId) {
-  const returnValue = await _setup(resumeId, false, false);
+  const returnValue = await _setup(resumeId, false, false, false);
   return returnValue;
 }
 
 async function setupAndWait(
   resumeId,
+  signInWithGoogle,
   waitForLoadingScreenToDisappear,
   waitForDatabaseUpdateToHaveCompleted,
 ) {
   const returnValue = await _setup(
     resumeId,
+    signInWithGoogle,
     waitForLoadingScreenToDisappear,
     waitForDatabaseUpdateToHaveCompleted,
   );
@@ -124,4 +163,7 @@ export {
   setupAndWait,
   waitForDatabaseUpdateToHaveCompletedFn as waitForDatabaseUpdateToHaveCompleted,
   expectDatabaseUpdateToHaveCompleted,
+  dragAndDropDirectionUp,
+  dragAndDropDirectionDown,
+  dragAndDropListItem,
 };

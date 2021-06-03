@@ -1,8 +1,8 @@
-import React, { memo, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import PageContext from '../../../contexts/PageContext';
-import { hasAddress, safetyCheck } from '../../../utils';
+import React, { memo, useContext } from 'react';
+import { hasAddress, isItemVisible, safetyCheck } from '../../../utils';
 import BirthDateA from '../BirthDate/BirthDateA';
+import PageContext from '../../../contexts/PageContext';
 
 const ContactItem = ({ value, label, link }) =>
   value ? (
@@ -58,14 +58,17 @@ const ContactC = () => {
       <BirthDateA />
 
       {safetyCheck(data.social) &&
-        data.social.items.map((x) => (
-          <ContactItem
-            key={x.id}
-            value={x.username}
-            label={x.network}
-            link={x.url}
-          />
-        ))}
+        data.social.items.map(
+          (x) =>
+            isItemVisible(x) && (
+              <ContactItem
+                key={x.id}
+                value={x.username}
+                label={x.network}
+                link={x.url}
+              />
+            ),
+        )}
     </div>
   );
 };

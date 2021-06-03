@@ -46,6 +46,7 @@ For those of you familiar with the Crowdin Platform, you could do that too and j
 ##### Languages Currently Supported
 
 - Arabic (عربى)
+- Bengali (বাংলা)
 - Czech (čeština)
 - Chinese Simplified (简体中文)
 - Danish (Dansk)
@@ -59,12 +60,15 @@ For those of you familiar with the Crowdin Platform, you could do that too and j
 - Italian (Italiano)
 - Japanese (日本人)
 - Kannada (ಕನ್ನಡ)
+- Lithuanian (Lietuvių)
 - Norwegian (Norsk)
 - Persian (Farsi)
 - Polish (Polskie)
 - Portuguese (Brazilian)
 - Portuguese (Portugal)
+- Romanian (Română)
 - Russian (русский)
+- Slovak (Slovenčina)
 - Spanish (Español)
 - Swedish (Svenska)
 - Turkish (Türkçe)

@@ -1,4 +1,5 @@
 import ar from './ar.json';
+import bn from './bn.json';
 import cs from './cs.json';
 import da from './da.json';
 import de from './de.json';
@@ -12,12 +13,15 @@ import hi from './hi.json';
 import it from './it.json';
 import ja from './ja.json';
 import kn from './kn.json';
-import nl from './nl.json';
+import lt from './lt.json';
 import nb from './nb.json';
+import nl from './nl.json';
 import pl from './pl.json';
 import ptBr from './pt-br.json';
 import ptPt from './pt-pt.json';
+import ro from './ro.json';
 import ru from './ru.json';
+import sk from './sk.json';
 import sv from './sv.json';
 import tr from './tr.json';
 import uk from './uk.json';
@@ -25,6 +29,7 @@ import zh from './zh.json';
 
 export default {
   ar: { translation: ar },
+  bn: { translation: bn },
   cs: { translation: cs },
   da: { translation: da },
   de: { translation: de },
@@ -38,12 +43,15 @@ export default {
   it: { translation: it },
   ja: { translation: ja },
   kn: { translation: kn },
+  lt: { translation: lt },
   nl: { translation: nl },
   nb: { translation: nb },
   pl: { translation: pl },
   ptBr: { translation: ptBr },
   ptPt: { translation: ptPt },
+  ro: { translation: ro },
   ru: { translation: ru },
+  sk: { translation: sk },
   sv: { translation: sv },
   tr: { translation: tr },
   uk: { translation: uk },

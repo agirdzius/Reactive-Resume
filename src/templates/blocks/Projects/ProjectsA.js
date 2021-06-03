@@ -1,8 +1,8 @@
-import React, { memo, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import React, { memo, useContext } from 'react';
 import ReactMarkdown from 'react-markdown';
 import PageContext from '../../../contexts/PageContext';
-import { formatDateRange, safetyCheck } from '../../../utils';
+import { formatDateRange, isItemVisible, safetyCheck } from '../../../utils';
 
 const ProjectItem = ({ item, language }) => {
   const { t } = useTranslation();
@@ -33,10 +33,9 @@ const ProjectItem = ({ item, language }) => {
         )}
       </div>
       {item.summary && (
-        <ReactMarkdown
-          className="markdown mt-2 text-sm"
-          source={item.summary}
-        />
+        <ReactMarkdown className="markdown mt-2 text-sm">
+          {item.summary}
+        </ReactMarkdown>
       )}
     </div>
   );
@@ -49,9 +48,16 @@ const ProjectsA = () => {
     <div>
       <Heading>{data.projects.heading}</Heading>
       <div className="grid gap-4">
-        {data.projects.items.map((x) => (
-          <ProjectItem key={x.id} item={x} language={data.metadata.language} />
-        ))}
+        {data.projects.items.map(
+          (x) =>
+            isItemVisible(x) && (
+              <ProjectItem
+                key={x.id}
+                item={x}
+                language={data.metadata.language}
+              />
+            ),
+        )}
       </div>
     </div>
   ) : null;

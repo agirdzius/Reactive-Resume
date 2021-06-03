@@ -1,11 +1,15 @@
-import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import i18n from 'i18next';
 import resources from './locales';
 
 const languages = [
   {
     code: 'ar',
     name: 'Arabic (عربى)',
+  },
+  {
+    code: 'bn',
+    name: 'Bengali (বাংলা)',
   },
   {
     code: 'cs',
@@ -60,6 +64,10 @@ const languages = [
     name: 'Kannada (ಕನ್ನಡ)',
   },
   {
+    code: 'lt',
+    name: 'Lithuanian (Lietuvių)',
+  },
+  {
     code: 'nb',
     name: 'Norwegian (Norsk)',
   },
@@ -80,8 +88,16 @@ const languages = [
     name: 'Portuguese (Portugal)',
   },
   {
+    code: 'ro',
+    name: 'Romanian (Română)',
+  },
+  {
     code: 'ru',
     name: 'Russian (русский)',
+  },
+  {
+    code: 'sk',
+    name: 'Slovak (Slovenčina)',
   },
   {
     code: 'es',

@@ -1,11 +1,11 @@
-import { get } from 'lodash';
-import React, { memo, useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 import { FaCaretRight } from 'react-icons/fa';
-import PageContext from '../../../contexts/PageContext';
-import { safetyCheck } from '../../../utils';
+import { get } from 'lodash';
+import { useTranslation } from 'react-i18next';
+import React, { memo, useContext } from 'react';
+import { isItemVisible, safetyCheck } from '../../../utils';
 import BirthDateB from '../BirthDate/BirthDateB';
 import Icons from '../Icons';
+import PageContext from '../../../contexts/PageContext';
 
 const ContactItem = ({ value, icon, link }) => {
   const { data } = useContext(PageContext);
@@ -57,14 +57,17 @@ const ContactA = () => {
       <BirthDateB />
 
       {safetyCheck(data.social) &&
-        data.social.items.map((x) => (
-          <ContactItem
-            key={x.id}
-            value={x.username}
-            icon={x.network}
-            link={x.url}
-          />
-        ))}
+        data.social.items.map(
+          (x) =>
+            isItemVisible(x) && (
+              <ContactItem
+                key={x.id}
+                value={x.username}
+                icon={x.network}
+                link={x.url}
+              />
+            ),
+        )}
     </div>
   );
 };
